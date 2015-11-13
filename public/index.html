@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Johnny-Five Realtime</title>
+</head>
+<body>
+  <h1>Johnny-Five Realtime</h1>
+  <p id="temperature">0</p>
+  <button id="on">On</button>
+  <button id="off">Off</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var btnOn = document.querySelector('#on')
+    var btnOff = document.querySelector('#off')
+    var tempLbl = document.querySelector('#temperature')
+
+    var socket = io.connect()
+
+    socket.on('temperature', function (t) {
+       tempLbl.innerHTML = t
+    })
+
+    btnOn.addEventListener('click', function (e) {
+      socket.emit('led:on') 
+    }, false)
+
+    btnOff.addEventListener('click', function (e) {
+       socket.emit('led:off')
+    }, false)
+  </script>
+</body>
+</html>
